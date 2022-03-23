@@ -1,20 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
 import { projectFirestore } from '../firebase/config';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
+
 export const useCollection = (theCollection, _query, _orderBy) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
-  const query = useRef(_query).current;
-  const orderBy = useRef(_orderBy).current;
+  // const query = useRef(_query).current;
+  // const orderBy = useRef(_orderBy).current;
   useEffect(() => {
     let ref = collection(projectFirestore, theCollection);
 
-    if (query) {
-      ref = ref.where(...query);
+    // if (query) {
+    //   ref = ref.where(...query);
+    // }
+    // if (orderBy) {
+    //   ref = ref.orderBy(...orderBy);
+    // }
+    if (theCollection === 'projects') {
+      ref = query(ref, orderBy('createdAt', 'desc'));
     }
-    if (orderBy) {
-      ref = ref.orderBy(...orderBy);
+    if (theCollection === 'users') {
+      ref = query(ref, orderBy('online', 'desc'));
     }
+    console.log(ref);
     const unsub = onSnapshot(
       ref,
       (snapshot) => {

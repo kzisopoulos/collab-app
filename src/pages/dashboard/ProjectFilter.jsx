@@ -1,5 +1,6 @@
 import React from 'react';
 const filterList = ['all', 'mine', 'development', 'infrastructure', 'network'];
+
 const ProjectFilter = ({ currentFilter, changeFilter }) => {
   const handleClick = (newFilter) => {
     changeFilter(newFilter);

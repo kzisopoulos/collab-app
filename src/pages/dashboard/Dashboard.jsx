@@ -6,6 +6,7 @@ import ProjectList from '../../components/ProjectList';
 import ProjectFilter from './ProjectFilter';
 import { useAuthContext } from '../../hooks/useAuthContext';
 const Dashboard = () => {
+  const theQuery = null;
   const { documents, error } = useCollection('projects');
   const [currentFilter, setCurrentFilter] = useState('all');
   const [filteredDocs, setFilteredDocs] = useState(null);
