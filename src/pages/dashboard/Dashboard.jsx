@@ -19,13 +19,15 @@ const Dashboard = () => {
   useEffect(() => {
     if (documents) {
       if (currentFilter === 'all') {
-        setFilteredDocs(documents);
+        setFilteredDocs(
+          documents.filter((doc) => doc.category !== 'completed')
+        );
       } else if (currentFilter === 'mine') {
         setFilteredDocs(
           documents.filter((doc) => {
             let assignedToMe = false;
             doc.assignedUsersList.map((u) => {
-              if (u.id === user.uid) {
+              if (u.id === user.uid && doc.category !== 'completed') {
                 assignedToMe = true;
               }
               return true;

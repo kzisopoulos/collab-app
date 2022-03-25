@@ -76,3 +76,7 @@
   color: var(--text-color);
   font-size: 0.9em;
 }
+.project__action-btns {
+  display: flex;
+  gap: 1rem;
+}

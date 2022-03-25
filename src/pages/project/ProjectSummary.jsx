@@ -5,12 +5,18 @@ import { useFirestore } from '../../hooks/useFirestore';
 import { useNavigate } from 'react-router-dom';
 
 const ProjectSummary = ({ project }) => {
-  const { deleteDocument } = useFirestore('projects');
+  const { deleteDocument, updateDocument } = useFirestore('projects');
   const { user } = useAuthContext();
   let displayBtn = user.uid === project.createdBy.id ? true : false;
   let navigate = useNavigate();
   const handleClick = (e) => {
     deleteDocument(project.id);
+    navigate('/');
+  };
+  const handleUpdate = (e) => {
+    updateDocument(project.id, {
+      category: 'completed',
+    });
     navigate('/');
   };
   return (
@@ -35,9 +41,14 @@ const ProjectSummary = ({ project }) => {
         </div>
       </div>
       {displayBtn && (
-        <button onClick={handleClick} className="btn">
-          Mark as complete
-        </button>
+        <div className="project__action-btns">
+          <button onClick={handleClick} className="btn">
+            Delete
+          </button>
+          <button onClick={handleUpdate} className="btn">
+            Mark as complete
+          </button>
+        </div>
       )}
     </div>
   );
